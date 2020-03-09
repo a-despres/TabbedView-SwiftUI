@@ -35,7 +35,13 @@ struct TabbedItemView: View {
     
     // MARK: - Components
     var image: some View {
-        Image(systemName: self.item.icon)
+        if self.item.image != nil {
+            return Image(self.item.image!)
+                .imageScale(.large)
+                .foregroundColor(self.isSelected ? (self.item.color ?? self.viewPreferences.foregroundColor) : self.viewPreferences.inactiveColor)
+        }
+        
+        return Image(systemName: self.item.systemImage!)
             .imageScale(.large)
             .foregroundColor(self.isSelected ? (self.item.color ?? self.viewPreferences.foregroundColor) : self.viewPreferences.inactiveColor)
     }

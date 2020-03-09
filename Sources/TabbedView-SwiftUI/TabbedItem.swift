@@ -11,13 +11,22 @@ import SwiftUI
 public struct TabbedItem {
     
     // MARK: - Internal Properties
-    let icon: String
+    let image: String?
+    let systemImage: String?
     let title: String
     let color: Color?
     
     // MARK: - Initialization
-    public init(icon: String, title: String, color: Color? = nil) {
-        self.icon = icon
+    public init(image: String, title: String, color: Color? = nil) {
+        self.image = image
+        self.systemImage = nil
+        self.title = title
+        self.color = color
+    }
+    
+    public init(systemImage: String, title: String, color: Color? = nil) {
+        self.image = nil
+        self.systemImage = systemImage
         self.title = title
         self.color = color
     }
