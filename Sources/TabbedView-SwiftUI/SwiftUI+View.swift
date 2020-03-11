@@ -28,7 +28,7 @@ extension View {
         }
     }
     
-    func point(_ point: CGPoint, index: Int, color: Color) -> some View {
+    func point(_ point: CGPoint, index: Int, color: Color?) -> some View {
         self.anchorPreference(key: TabbedView.TabPositionPreferenceKey.self, value: .center, transform: {
             [TabbedView.TabPositionPreference(index: index, center: $0, color: color)]
         })

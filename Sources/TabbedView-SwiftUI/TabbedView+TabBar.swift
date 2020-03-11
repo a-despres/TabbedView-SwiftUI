@@ -13,9 +13,9 @@ extension TabbedView {
     struct TabBar: View {
         
         // MARK: - Environment
+        @Binding var foregroundColor: Color
         @Binding var selection: Int
         @Binding var tabItems: [TabbedItem]
-        @Binding var shouldAnimate: Bool
         
         // MARK: - Internal Properties
         var viewPreferences: TabbedViewPreferences
@@ -35,6 +35,7 @@ extension TabbedView {
                         withAnimation { self.selection = index }
                     }) {
                         TabbedItemView(
+                            foregroundColor: self.$foregroundColor,
                             isSelected: self.selection == index,
                             item: self.tabItems[index],
                             viewPreferences: self.viewPreferences)
@@ -43,13 +44,13 @@ extension TabbedView {
                     .point(
                         CGPoint(x: 0, y: 0),
                         index: index,
-                        color: self.tabItems[index].color ?? self.viewPreferences.foregroundColor)
+                        color: self.tabItems[index].color)
                 }
             }
             .frame(width: self.barWidth, height: self.barHeight)
             .backgroundPreferenceValue(TabPositionPreferenceKey.self) { preferences in
                 return GeometryReader { geometry in
-                    ZStack {
+                    ZStack  {
                         self.createIndicator(geometry, preferences)
                     }
                     .background(self.viewPreferences.backgroundColor)
@@ -60,15 +61,16 @@ extension TabbedView {
         // MARK: - Private Methods
         func createIndicator(_ geometry: GeometryProxy, _ preferences: [TabPositionPreference]) -> some View {
             let p = preferences.first(where: { $0.index == self.selection })
-            
+
             let aCenter = p?.center
             let center = aCenter != nil ? geometry[aCenter!] : .zero
-            
+
+            let foregroundColor = p?.color != nil ? p?.color : self.foregroundColor
+
             return RoundedRectangle(cornerRadius: 4)
-                .foregroundColor(p?.color)
+                .foregroundColor(foregroundColor)
                 .frame(width: 64, height: viewPreferences.indicatorHeight * 2)
                 .position(CGPoint(x: center.x, y: barHeight))
-                .animation(.easeInOut(duration: shouldAnimate ? 0.2 : 0.0))
         }
     }
 }

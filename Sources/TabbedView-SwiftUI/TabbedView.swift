@@ -34,7 +34,6 @@ public struct TabbedView: View {
     
     // MARK: - Environment
     @State private var selection: Int
-    @State private var shouldAnimate: Bool = false
     @State private var tabItems: [TabbedItem] = []
     
     // MARK: - Public Properties
@@ -50,16 +49,11 @@ public struct TabbedView: View {
             ZStack {
                 ContentView(selection: $selection, content: self.content)
             }
-            TabBar(selection: $selection, tabItems: $tabItems, shouldAnimate: $shouldAnimate, viewPreferences: viewPreferences)
+            TabBar(foregroundColor: viewPreferences.$foregroundColor, selection: $selection, tabItems: $tabItems, viewPreferences: viewPreferences)
         }
         .onPreferenceChange(TabItemPreferenceKey.self) { preferences in
             preferences.forEach { preference in
                 self.tabItems.append(preference.item)
-            }
-        }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.shouldAnimate = true
             }
         }
     }

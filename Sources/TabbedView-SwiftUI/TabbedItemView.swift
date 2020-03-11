@@ -10,6 +10,9 @@ import SwiftUI
 
 struct TabbedItemView: View {
     
+    // MARK: - Environment
+    @Binding var foregroundColor: Color
+    
     // MARK: - Public Properties
     var isSelected: Bool
     let item: TabbedItem
@@ -38,17 +41,17 @@ struct TabbedItemView: View {
         if self.item.image != nil {
             return Image(self.item.image!)
                 .imageScale(.large)
-                .foregroundColor(self.isSelected ? (self.item.color ?? self.viewPreferences.foregroundColor) : self.viewPreferences.inactiveColor)
+                .foregroundColor(self.isSelected ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor)
         }
         
         return Image(systemName: self.item.systemImage!)
             .imageScale(.large)
-            .foregroundColor(self.isSelected ? (self.item.color ?? self.viewPreferences.foregroundColor) : self.viewPreferences.inactiveColor)
+            .foregroundColor(self.isSelected ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor)
     }
     
     var title: some View {
         Text(self.item.title)
-            .foregroundColor(self.isSelected ? (self.item.color ?? self.viewPreferences.foregroundColor) : self.viewPreferences.inactiveColor)
+            .foregroundColor(self.isSelected ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor)
             .font(.system(size: 12))
             .padding(.top, 2)
     }
