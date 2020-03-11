@@ -12,6 +12,7 @@ struct TabbedItemView: View {
     
     // MARK: - Environment
     @Binding var foregroundColor: Color
+    @Binding var isDisabled: Bool
     
     // MARK: - Public Properties
     var isSelected: Bool
@@ -41,17 +42,17 @@ struct TabbedItemView: View {
         if self.item.image != nil {
             return Image(self.item.image!)
                 .imageScale(.large)
-                .foregroundColor(self.isSelected ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor)
+                .foregroundColor(self.isSelected ? (!self.isDisabled ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor) : self.viewPreferences.inactiveColor)
         }
         
         return Image(systemName: self.item.systemImage!)
             .imageScale(.large)
-            .foregroundColor(self.isSelected ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor)
+            .foregroundColor(self.isSelected ? (!self.isDisabled ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor) : self.viewPreferences.inactiveColor)
     }
     
     var title: some View {
         Text(self.item.title)
-            .foregroundColor(self.isSelected ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor)
+            .foregroundColor(self.isSelected ? (!self.isDisabled ? (self.item.color ?? self.foregroundColor) : self.viewPreferences.inactiveColor) : self.viewPreferences.inactiveColor)
             .font(.system(size: 12))
             .padding(.top, 2)
     }

@@ -14,6 +14,7 @@ extension TabbedView {
         
         // MARK: - Environment
         @Binding var foregroundColor: Color
+        @Binding var isDisabled: Bool
         @Binding var selection: Int
         @Binding var tabItems: [TabbedItem]
         
@@ -36,6 +37,7 @@ extension TabbedView {
                     }) {
                         TabbedItemView(
                             foregroundColor: self.$foregroundColor,
+                            isDisabled: self.$isDisabled,
                             isSelected: self.selection == index,
                             item: self.tabItems[index],
                             viewPreferences: self.viewPreferences)
@@ -56,6 +58,7 @@ extension TabbedView {
                     .background(self.viewPreferences.backgroundColor)
                 }
             }
+            .disabled(self.isDisabled)
         }
         
         // MARK: - Private Methods
@@ -65,7 +68,7 @@ extension TabbedView {
             let aCenter = p?.center
             let center = aCenter != nil ? geometry[aCenter!] : .zero
 
-            let foregroundColor = p?.color != nil ? p?.color : self.foregroundColor
+            let foregroundColor = !self.isDisabled ? (p?.color != nil ? p?.color : self.foregroundColor) : self.viewPreferences.inactiveColor
 
             return RoundedRectangle(cornerRadius: 4)
                 .foregroundColor(foregroundColor)

@@ -33,6 +33,7 @@ import SwiftUI
 public struct TabbedView: View {
     
     // MARK: - Environment
+    @Binding private var isDisabled: Bool
     @State private var selection: Int
     @State private var tabItems: [TabbedItem] = []
     
@@ -49,7 +50,7 @@ public struct TabbedView: View {
             ZStack {
                 ContentView(selection: $selection, content: self.content)
             }
-            TabBar(foregroundColor: viewPreferences.$foregroundColor, selection: $selection, tabItems: $tabItems, viewPreferences: viewPreferences)
+            TabBar(foregroundColor: viewPreferences.$foregroundColor, isDisabled: $isDisabled, selection: $selection, tabItems: $tabItems, viewPreferences: viewPreferences)
         }
         .onPreferenceChange(TabItemPreferenceKey.self) { preferences in
             preferences.forEach { preference in
@@ -67,6 +68,7 @@ public struct TabbedView: View {
     ///   - content: The child view to be displayed in each tab.
     public init<A: View, B: View>(
         selection: Int? = nil,
+        disabled: Binding<Bool>? = nil,
         preferences: TabbedViewPreferences? = nil,
         @ViewBuilder content: () -> TupleView<(A, B)>) {
         
@@ -74,6 +76,7 @@ public struct TabbedView: View {
         
         self.content = [AnyView(views.0), AnyView(views.1)]
         self._selection = selection != nil ? State(initialValue: selection!) : State(initialValue: 0)
+        self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
     }
     
@@ -84,6 +87,7 @@ public struct TabbedView: View {
     ///   - content: The child view to be displayed in each tab.
     public init<A: View, B: View, C: View>(
         selection: Int? = nil,
+        disabled: Binding<Bool>? = nil,
         preferences: TabbedViewPreferences? = nil,
         @ViewBuilder content: () -> TupleView<(A, B, C)>) {
         
@@ -91,6 +95,7 @@ public struct TabbedView: View {
         
         self.content = [AnyView(views.0), AnyView(views.1), AnyView(views.2)]
         self._selection = selection != nil ? State(initialValue: selection!) : State(initialValue: 0)
+        self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
     }
     
@@ -101,6 +106,7 @@ public struct TabbedView: View {
     ///   - content: The child view to be displayed in each tab.
     public init<A: View, B: View, C: View, D: View>(
         selection: Int? = nil,
+        disabled: Binding<Bool>? = nil,
         preferences: TabbedViewPreferences? = nil,
         @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
         
@@ -108,6 +114,7 @@ public struct TabbedView: View {
         
         self.content = [AnyView(views.0), AnyView(views.1), AnyView(views.2), AnyView(views.3)]
         self._selection = selection != nil ? State(initialValue: selection!) : State(initialValue: 0)
+        self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
     }
 }
