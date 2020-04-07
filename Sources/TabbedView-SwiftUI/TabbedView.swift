@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 /// A view that switches between multiple child views using interactive user interface elements.
 ///
@@ -42,6 +43,9 @@ public struct TabbedView: View {
     
     // MARK: - Internal Properties
     var viewPreferences: TabbedViewPreferences
+    
+    // MARK: - Static Passthrough Subject
+    public static var selectedTab = PassthroughSubject<String, Never>()
     
     // MARK: - Body
     public var body: some View {

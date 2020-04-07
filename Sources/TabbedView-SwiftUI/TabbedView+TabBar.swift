@@ -33,7 +33,10 @@ extension TabbedView {
             HStack(alignment: .center, spacing: 0) {
                 ForEach(0 ..< self.tabItems.count, id: \.self) { index in
                     return Button(action: {
-                        withAnimation { self.selection = index }
+                        withAnimation {
+                            TabbedView.selectedTab.send(self.tabItems[index].title)
+                            self.selection = index
+                        }
                     }) {
                         TabbedItemView(
                             foregroundColor: self.$foregroundColor,
