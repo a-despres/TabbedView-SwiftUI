@@ -55,6 +55,7 @@ public struct TabbedView: View {
                 ContentView(selection: $selection, content: self.content)
             }
             TabBar(foregroundColor: viewPreferences.$foregroundColor, isDisabled: $isDisabled, selection: $selection, tabItems: $tabItems, viewPreferences: viewPreferences)
+                .shadow(color: Color.black.opacity(viewPreferences.shadow ? 0.1 : 0.0), radius: 16, x: 0, y: -4)
         }
         .onPreferenceChange(TabItemPreferenceKey.self) { preferences in
             preferences.forEach { preference in
