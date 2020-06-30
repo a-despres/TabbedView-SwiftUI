@@ -32,7 +32,7 @@ public struct TabbedViewPreferences {
         titleVisibleOnSelection: Bool? = nil) {
         
         if let backgroundColor = backgroundColor { self.backgroundColor = backgroundColor }
-        self._foregroundColor = foregroundColor != nil ? foregroundColor! : State(initialValue: Color.blue).projectedValue
+        self._foregroundColor = foregroundColor != nil ? foregroundColor! : .constant(.blue)
         if let inactiveColor = inactiveColor { self.inactiveColor = inactiveColor }
         if let indicatorHeight = indicatorHeight { self.indicatorHeight = indicatorHeight }
         if let shadow = shadow { self.shadow = shadow }
@@ -50,7 +50,7 @@ public struct TabbedViewPreferences {
         titleVisibleOnSelection: Bool? = nil) {
         
         if let backgroundColor = backgroundColor { self.backgroundColor = backgroundColor }
-        self._foregroundColor = foregroundColor != nil ? State(initialValue: foregroundColor!).projectedValue : State(initialValue: Color.blue).projectedValue
+        self._foregroundColor = foregroundColor != nil ? .constant(foregroundColor!) : .constant(.blue)
         if let inactiveColor = inactiveColor { self.inactiveColor = inactiveColor }
         if let indicatorHeight = indicatorHeight { self.indicatorHeight = indicatorHeight }
         if let shadow = shadow { self.shadow = shadow }

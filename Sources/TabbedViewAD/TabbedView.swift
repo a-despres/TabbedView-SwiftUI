@@ -80,8 +80,8 @@ public struct TabbedView: View {
         let views = content().value
 
         self.content = [AnyView(views.0), AnyView(views.1)]
-        self._selection = selection != nil ? selection! : State(initialValue: 0).projectedValue
-        self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
+        self._selection = selection != nil ? selection! : .constant(0)
+        self._isDisabled = disabled != nil ? disabled!: .constant(false)
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
     }
     
@@ -99,8 +99,8 @@ public struct TabbedView: View {
         let views = content().value
 
         self.content = [AnyView(views.0), AnyView(views.1), AnyView(views.2)]
-        self._selection = selection != nil ? selection! : State(initialValue: 0).projectedValue
-        self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
+        self._selection = selection != nil ? selection! : .constant(0)
+        self._isDisabled = disabled != nil ? disabled!: .constant(false)
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
     }
     
@@ -118,8 +118,8 @@ public struct TabbedView: View {
         let views = content().value
 
         self.content = [AnyView(views.0), AnyView(views.1), AnyView(views.2), AnyView(views.3)]
-        self._selection = selection != nil ? selection! : State(initialValue: 0).projectedValue
-        self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
+        self._selection = selection != nil ? selection! : .constant(0)
+        self._isDisabled = disabled != nil ? disabled!: .constant(false)
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
     }
 }
