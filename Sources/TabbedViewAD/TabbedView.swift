@@ -62,6 +62,7 @@ public struct TabbedView: View {
                 self.tabItems.append(preference.item)
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
     
     // MARK: - Initialization
@@ -126,19 +127,41 @@ public struct TabbedView: View {
 
 struct TabbedView_Previews: PreviewProvider {
     static var previews: some View {
-        TabbedView(selection: .constant(0), disabled: .constant(false), preferences: preferences[2]) {
-            Text("Child View 1")
-                .tabItem(previewItems[0])
-                .tag(0)
-            Text("Child View 2")
-                .tabItem(previewItems[1])
-                .tag(1)
-            Text("Child View 3")
-                .tabItem(previewItems[2])
-                .tag(2)
-            Text("Child View 4")
-                .tabItem(previewItems[3])
-                .tag(3)
+        Group {
+            TabbedView(selection: .constant(0), disabled: .constant(false), preferences: preferences[0]) {
+                Text("Child View 1")
+                    .tabItem(previewItems[0])
+                    .tag(0)
+                Text("Child View 2")
+                    .tabItem(previewItems[1])
+                    .tag(1)
+                Text("Child View 3")
+                    .tabItem(previewItems[2])
+                    .tag(2)
+                Text("Child View 4")
+                    .tabItem(previewItems[3])
+                    .tag(3)
+            }
+            .previewLayout(.device)
+            .previewDevice("iPhone 8")
+            
+            TabbedView(selection: .constant(0), disabled: .constant(false), preferences: preferences[0]) {
+                Text("Child View 1")
+                    .tabItem(previewItems[0])
+                    .tag(0)
+                Text("Child View 2")
+                    .tabItem(previewItems[1])
+                    .tag(1)
+                Text("Child View 3")
+                    .tabItem(previewItems[2])
+                    .tag(2)
+                Text("Child View 4")
+                    .tabItem(previewItems[3])
+                    .tag(3)
+            }
+            .preferredColorScheme(.light)
+            .previewLayout(.device)
+            .previewDevice("iPhone 11")
         }
     }
 }

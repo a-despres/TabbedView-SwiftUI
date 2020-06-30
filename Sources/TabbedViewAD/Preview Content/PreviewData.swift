@@ -34,7 +34,7 @@ let previewItems = [
     previewItem4]
 
 fileprivate let preferences1 = TabbedViewPreferences(
-    backgroundColor: .white,
+    backgroundColor: .green,
     foregroundColor: .constant(.red),
     inactiveColor: .blue,
     indicatorHeight: 8,

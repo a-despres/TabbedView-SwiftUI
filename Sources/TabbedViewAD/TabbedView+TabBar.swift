@@ -30,38 +30,47 @@ extension TabbedView {
         // MARK: - Body
         var body: some View {
             
-            HStack(alignment: .center, spacing: 0) {
-                ForEach(0 ..< self.tabItems.count, id: \.self) { index in
-                    return Button(action: {
-                        withAnimation {
-                            TabbedView.selectedTab.send(self.tabItems[index].title)
-                            self.selection = index
+            VStack(spacing: 0) {
+                HStack(alignment: .center, spacing: 0) {
+                    ForEach(0 ..< self.tabItems.count, id: \.self) { index in
+                        return Button(action: {
+                            withAnimation {
+                                TabbedView.selectedTab.send(self.tabItems[index].title)
+                                self.selection = index
+                            }
+                        }) {
+                            TabbedItemView(
+                                foregroundColor: self.$foregroundColor,
+                                isDisabled: self.$isDisabled,
+                                isSelected: self.selection == index,
+                                item: self.tabItems[index],
+                                viewPreferences: self.viewPreferences)
+                                .frame(width: self.tabWidth, height: self.tabHeight)
                         }
-                    }) {
-                        TabbedItemView(
-                            foregroundColor: self.$foregroundColor,
-                            isDisabled: self.$isDisabled,
-                            isSelected: self.selection == index,
-                            item: self.tabItems[index],
-                            viewPreferences: self.viewPreferences)
-                            .frame(width: self.tabWidth, height: self.tabHeight)
+                        .point(
+                            CGPoint(x: 0, y: 0),
+                            index: index,
+                            color: self.tabItems[index].color)
                     }
-                    .point(
-                        CGPoint(x: 0, y: 0),
-                        index: index,
-                        color: self.tabItems[index].color)
+                }
+                .frame(width: self.barWidth, height: self.barHeight)
+                .background(viewPreferences.backgroundColor)
+//                .backgroundPreferenceValue(TabbedView.TabPositionPreferenceKey.self) { preferences in
+//                    return GeometryReader { geometry in
+//                        ZStack  {
+//                            self.createIndicator(geometry, preferences)
+//                        }
+//                        .background(self.viewPreferences.backgroundColor)
+//                    }
+//                }
+                .disabled(self.isDisabled)
+                
+                if UIScreen.main.nativeBounds.height > 1792 {
+                    Rectangle()
+                        .fill(viewPreferences.backgroundColor)
+                        .frame(width: self.barWidth, height: 34)
                 }
             }
-            .frame(width: self.barWidth, height: self.barHeight)
-            .backgroundPreferenceValue(TabbedView.TabPositionPreferenceKey.self) { preferences in
-                return GeometryReader { geometry in
-                    ZStack  {
-                        self.createIndicator(geometry, preferences)
-                    }
-                    .background(self.viewPreferences.backgroundColor)
-                }
-            }
-            .disabled(self.isDisabled)
         }
         
         // MARK: - Private Methods
@@ -72,10 +81,15 @@ extension TabbedView {
             let center = aCenter != nil ? geometry[aCenter!] : .zero
 
             let foregroundColor = !self.isDisabled ? (p?.color != nil ? p?.color : self.foregroundColor) : self.viewPreferences.inactiveColor
+            
+            var muliplier: CGFloat {
+                if UIScreen.main.nativeBounds.height < 1792 { return 2 }
+                return 1
+            }
 
             return RoundedRectangle(cornerRadius: 4)
                 .foregroundColor(foregroundColor)
-                .frame(width: 64, height: viewPreferences.indicatorHeight * 2)
+                .frame(width: 64, height: viewPreferences.indicatorHeight * muliplier)
                 .position(CGPoint(x: center.x, y: barHeight))
         }
     }
