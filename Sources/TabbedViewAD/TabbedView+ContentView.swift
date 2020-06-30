@@ -46,3 +46,11 @@ extension TabbedView {
         }
     }
 }
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        TabbedView.ContentView(
+            selection: .constant(0),
+            content: [AnyView(Text("Hello, World!"))])
+    }
+}

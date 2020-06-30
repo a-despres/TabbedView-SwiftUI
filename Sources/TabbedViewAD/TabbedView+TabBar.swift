@@ -53,7 +53,7 @@ extension TabbedView {
                 }
             }
             .frame(width: self.barWidth, height: self.barHeight)
-            .backgroundPreferenceValue(TabPositionPreferenceKey.self) { preferences in
+            .backgroundPreferenceValue(TabbedView.TabPositionPreferenceKey.self) { preferences in
                 return GeometryReader { geometry in
                     ZStack  {
                         self.createIndicator(geometry, preferences)
@@ -65,7 +65,7 @@ extension TabbedView {
         }
         
         // MARK: - Private Methods
-        func createIndicator(_ geometry: GeometryProxy, _ preferences: [TabPositionPreference]) -> some View {
+        func createIndicator(_ geometry: GeometryProxy, _ preferences: [TabbedView.TabPositionPreference]) -> some View {
             let p = preferences.first(where: { $0.index == self.selection })
 
             let aCenter = p?.center
@@ -78,5 +78,16 @@ extension TabbedView {
                 .frame(width: 64, height: viewPreferences.indicatorHeight * 2)
                 .position(CGPoint(x: center.x, y: barHeight))
         }
+    }
+}
+
+struct TabBar_Previews: PreviewProvider {
+    static var previews: some View {
+        TabbedView.TabBar(
+            foregroundColor: .constant(.blue),
+            isDisabled: .constant(false),
+            selection: .constant(0),
+            tabItems: .constant(previewItems),
+            viewPreferences: preferences[0])
     }
 }

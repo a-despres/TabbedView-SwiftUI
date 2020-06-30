@@ -76,9 +76,9 @@ public struct TabbedView: View {
         disabled: Binding<Bool>? = nil,
         preferences: TabbedViewPreferences? = nil,
         @ViewBuilder content: () -> TupleView<(A, B)>) {
-        
+
         let views = content().value
-        
+
         self.content = [AnyView(views.0), AnyView(views.1)]
         self._selection = selection != nil ? selection! : State(initialValue: 0).projectedValue
         self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
@@ -95,9 +95,9 @@ public struct TabbedView: View {
         disabled: Binding<Bool>? = nil,
         preferences: TabbedViewPreferences? = nil,
         @ViewBuilder content: () -> TupleView<(A, B, C)>) {
-        
+
         let views = content().value
-        
+
         self.content = [AnyView(views.0), AnyView(views.1), AnyView(views.2)]
         self._selection = selection != nil ? selection! : State(initialValue: 0).projectedValue
         self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
@@ -114,12 +114,31 @@ public struct TabbedView: View {
         disabled: Binding<Bool>? = nil,
         preferences: TabbedViewPreferences? = nil,
         @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
-        
+
         let views = content().value
-        
+
         self.content = [AnyView(views.0), AnyView(views.1), AnyView(views.2), AnyView(views.3)]
         self._selection = selection != nil ? selection! : State(initialValue: 0).projectedValue
         self._isDisabled = disabled != nil ? disabled!: State(initialValue: false).projectedValue
         self.viewPreferences = preferences != nil ? preferences! : TabbedViewPreferences()
+    }
+}
+
+struct TabbedView_Previews: PreviewProvider {
+    static var previews: some View {
+        TabbedView(selection: .constant(0), disabled: .constant(false), preferences: preferences[2]) {
+            Text("Child View 1")
+                .tabItem(previewItems[0])
+                .tag(0)
+            Text("Child View 2")
+                .tabItem(previewItems[1])
+                .tag(1)
+            Text("Child View 3")
+                .tabItem(previewItems[2])
+                .tag(2)
+            Text("Child View 4")
+                .tabItem(previewItems[3])
+                .tag(3)
+        }
     }
 }
